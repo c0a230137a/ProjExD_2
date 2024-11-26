@@ -1,6 +1,7 @@
 import os
 import sys
 import pygame as pg
+import random
 
 
 WIDTH, HEIGHT = 1100, 650
@@ -21,7 +22,20 @@ def main():
     kk_rct.center = 300, 200
     clock = pg.time.Clock()
     tmr =0
+
+    # Create bomb surface
+    bb_img = pg.Surface((20, 20)) #爆弾用の空SurFace
+    pg.draw.circle(bb_img, (255, 0, 0), (10, 10), 10)  # 赤い円を描画
+    bb_img.set_colorkey((0, 0, 0))  # 黒を透明に設定
+    bb_rct = bb_img.get_rect()
+    bb_rct.center = random.randint(0, WIDTH), random.randint(0, HEIGHT)  # ランダムな位置に配置
+
+    vx, vy = 5, 5
     
+
+
+    
+
 
     while True:
         for event in pg.event.get():
@@ -31,13 +45,17 @@ def main():
 
         key_lst = pg.key.get_pressed()
         sum_mv = [0, 0]
-        for key, delta in DELTA.items():
+        for key, tpl in DELTA.items():
             if key_lst[key]:
-                sum_mv[0] += delta[0]
-                sum_mv[1] += delta[1]
+                sum_mv[0] += tpl[0]
+                sum_mv[1] += tpl[1]
 
         kk_rct.move_ip(sum_mv)
+
+        bb_rct.move_ip(vx, vy)
+
         screen.blit(kk_img, kk_rct)
+        screen.blit(bb_img, bb_rct)
         pg.display.update()
         tmr += 1
         clock.tick(50)
