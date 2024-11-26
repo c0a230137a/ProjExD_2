@@ -5,11 +5,12 @@ import pygame as pg
 
 # 定数定義
 WIDTH, HEIGHT = 1100, 650
+# こうかとんの移動量（キー入力に対応した方向と速度）
 DELTA = {
-    pg.K_UP: (0, -5),
-    pg.K_DOWN: (0, +5),
-    pg.K_LEFT: (-5, 0),
-    pg.K_RIGHT: (+5, 0),
+    pg.K_UP: (0, -5),  # 上キーでY座標を-5移動
+    pg.K_DOWN: (0, +5),  # 下キーでY座標を+5移動
+    pg.K_LEFT: (-5, 0),  # 左キーでX座標を-5移動
+    pg.K_RIGHT: (+5, 0),  # 右キーでX座標を+5移動
 }
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
