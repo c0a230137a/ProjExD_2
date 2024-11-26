@@ -5,7 +5,12 @@ import pygame as pg
 
 WIDTH, HEIGHT = 1100, 650
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
-
+DELTA = {
+        pg.K_UP: (0, -5),
+        pg.K_DOWN: (0, 5),
+        pg.K_LEFT: (-5, 0),
+        pg.K_RIGHT: (5, 0),
+    }
 
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
@@ -15,7 +20,9 @@ def main():
     kk_rct = kk_img.get_rect()
     kk_rct.center = 300, 200
     clock = pg.time.Clock()
-    tmr = 0
+    tmr =0
+    
+
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT: 
@@ -24,14 +31,11 @@ def main():
 
         key_lst = pg.key.get_pressed()
         sum_mv = [0, 0]
-        if key_lst[pg.K_UP]:
-            sum_mv[1] -= 5
-        if key_lst[pg.K_DOWN]:
-            sum_mv[1] += 5
-        if key_lst[pg.K_LEFT]:
-            sum_mv[0] -= 5
-        if key_lst[pg.K_RIGHT]:
-            sum_mv[0] += 5
+        for key, delta in DELTA.items():
+            if key_lst[key]:
+                sum_mv[0] += delta[0]
+                sum_mv[1] += delta[1]
+
         kk_rct.move_ip(sum_mv)
         screen.blit(kk_img, kk_rct)
         pg.display.update()
